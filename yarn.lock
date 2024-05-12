@@ -532,6 +532,18 @@
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"
   integrity sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==
 
+"@tanstack/query-core@5.35.5":
+  version "5.35.5"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.35.5.tgz#7b4100dc9cc7fee314b8a1bcbf502a236d43ffe3"
+  integrity sha512-OMWvlEqG01RfGj+XZb/piDzPp0eZkkHWSDHt2LvE/fd1zWburP/xwm0ghk6Iv8cuPlP+ACFkZviKXK0OVt6lhg==
+
+"@tanstack/react-query@^5.35.5":
+  version "5.35.5"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.35.5.tgz#d41a087d58f42418824fa04aaca00ba93c99075c"
+  integrity sha512-sppX7L+PVn5GBV3In6zzj0zcKfnZRKhXbX1MfIfKo1OjIq2GMaopvAFOP0x1bRYTUk2ikrdYcQYOozX7PWkb8A==
+  dependencies:
+    "@tanstack/query-core" "5.35.5"
+
 "@testing-library/dom@^10.0.0":
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-10.1.0.tgz#2d073e49771ad614da999ca48f199919e5176fb6"
