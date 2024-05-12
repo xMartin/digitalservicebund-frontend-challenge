@@ -1,2 +1,3 @@
 yarn lint-staged
 yarn lint
+CI=1 yarn test
