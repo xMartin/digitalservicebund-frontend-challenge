@@ -17,7 +17,9 @@ it("renders heading", () => {
     </QueryClientProvider>,
   );
 
-  expect(screen.getByText(/Datasets by Ministry/)).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: "Datasets by Ministry" }),
+  ).toBeInTheDocument();
 });
 
 it("renders table sorted by number of datasets", async () => {
