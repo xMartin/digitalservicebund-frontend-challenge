@@ -7,12 +7,10 @@
 .header {
   padding: 12px 24px;
   display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-}
-
-.actions {
-  margin-left: 12px;
 }
 
 .title {

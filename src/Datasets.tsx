@@ -69,39 +69,41 @@ export default function Datasets() {
   );
 
   return (
-    <Card title="Datasets by Ministry" actions={filter}>
-      {(() => {
-        if (!data) {
-          return null;
-        }
-        if (data.length) {
-          return (
-            <table className={styles.table}>
-              <tbody>
-                {data.map((entry, index) => (
-                  <tr key={entry.department} className={styles.row}>
-                    <td className={styles.department}>
-                      {entry.department}
-                      <span className={styles.bar}>
-                        <span style={{ width: `${entry.percent}%` }}></span>
-                      </span>
-                    </td>
-                    <td id={index.toString()} className={styles.value}>
-                      {entry.datasets}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          );
-        } else {
-          if (filterInput) {
-            return <p>No data with filter criteria “{filterInput}”.</p>;
-          } else {
-            return <p>No data.</p>;
+    <div className={styles.container}>
+      <Card title="Datasets by Ministry" actions={filter}>
+        {(() => {
+          if (!data) {
+            return null;
           }
-        }
-      })()}
-    </Card>
+          if (data.length) {
+            return (
+              <table className={styles.table}>
+                <tbody>
+                  {data.map((entry, index) => (
+                    <tr key={entry.department} className={styles.row}>
+                      <td className={styles.department}>
+                        {entry.department}
+                        <span className={styles.bar}>
+                          <span style={{ width: `${entry.percent}%` }}></span>
+                        </span>
+                      </td>
+                      <td id={index.toString()} className={styles.value}>
+                        {entry.datasets}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            );
+          } else {
+            if (filterInput) {
+              return <p>No data with filter criteria “{filterInput}”.</p>;
+            } else {
+              return <p>No data.</p>;
+            }
+          }
+        })()}
+      </Card>
+    </div>
   );
 }
