@@ -1,6 +1,14 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import Datasets, { ApiDataEntry } from "./Datasets";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+function mockFetch<T>(response: T) {
+  window.fetch = vi.fn(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(response),
+    } as Response),
+  );
+}
 
 it("renders heading", () => {
   render(
@@ -12,7 +20,7 @@ it("renders heading", () => {
   expect(screen.getByText(/Datasets by Ministry/)).toBeInTheDocument();
 });
 
-it("renders table sorted by number of datasets, with percentage bars", async () => {
+it("renders table sorted by number of datasets", async () => {
   const payload: ApiDataEntry[] = [
     {
       department: "X",
@@ -22,7 +30,7 @@ it("renders table sorted by number of datasets, with percentage bars", async () 
     {
       department: "Z",
       description: "",
-      datasets: 80,
+      datasets: 65,
     },
     {
       department: "Y",
@@ -31,11 +39,7 @@ it("renders table sorted by number of datasets, with percentage bars", async () 
     },
   ];
 
-  window.fetch = vi.fn(() =>
-    Promise.resolve({
-      json: () => Promise.resolve(payload),
-    } as Response),
-  );
+  mockFetch(payload);
 
   render(
     <QueryClientProvider client={new QueryClient()}>
@@ -44,11 +48,66 @@ it("renders table sorted by number of datasets, with percentage bars", async () 
   );
 
   const topValue = (await screen.findAllByRole("cell"))[1].innerHTML;
-  expect(topValue).toBe("80");
+  expect(topValue).toBe("65");
+});
+
+it("renders percentage bars", async () => {
+  const payload: ApiDataEntry[] = [
+    {
+      department: "A",
+      description: "",
+      datasets: 80,
+    },
+    {
+      department: "B",
+      description: "",
+      datasets: 8,
+    },
+  ];
+
+  mockFetch(payload);
+
+  render(
+    <QueryClientProvider client={new QueryClient()}>
+      <Datasets />
+    </QueryClientProvider>,
+  );
 
   const secondRowCell = (await screen.findAllByRole("cell"))[2];
   const innerBarSpan = secondRowCell.firstElementChild?.firstElementChild;
   // eslint-disable-next-line
   const width = (innerBarSpan as any)?.style.width;
   expect(width).toBe("10%");
+});
+
+it("filters", async () => {
+  const payload: ApiDataEntry[] = [
+    {
+      department: "Bundesministerium XXXY",
+      description: "",
+      datasets: 2,
+    },
+    {
+      department: "Institut ZTZ5",
+      description: "",
+      datasets: 80,
+    },
+  ];
+
+  mockFetch(payload);
+
+  render(
+    <QueryClientProvider client={new QueryClient()}>
+      <Datasets />
+    </QueryClientProvider>,
+  );
+
+  expect((await screen.findAllByRole("row")).length).toBe(2);
+
+  act(() => {
+    fireEvent.change(screen.getByLabelText(/filter/i), {
+      target: { value: "ZTZ" },
+    });
+  });
+  expect(screen.getAllByRole("row").length).toBe(1);
 });

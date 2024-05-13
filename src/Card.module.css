@@ -6,6 +6,13 @@
 
 .header {
   padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actions {
+  margin-left: 12px;
 }
 
 .title {

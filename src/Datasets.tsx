@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Card from "./Card";
 import styles from "./Datasets.module.css";
+import { SyntheticEvent, useId, useState } from "react";
 
 export type ApiDataEntry = {
   department: string;
@@ -13,6 +14,8 @@ type AppDataEntry = ApiDataEntry & {
 };
 
 export default function Datasets() {
+  const [filterInput, setFilterInput] = useState("");
+
   const { data } = useQuery({
     queryKey: ["datasets"],
     queryFn: async () => {
@@ -27,8 +30,12 @@ export default function Datasets() {
         }
       }
 
+      const filteredData = apiData.filter((entry) =>
+        entry.department.includes(filterInput),
+      );
+
       const result: AppDataEntry[] = [];
-      for (const apiDataEntry of apiData) {
+      for (const apiDataEntry of filteredData) {
         result.push({
           ...apiDataEntry,
           percent: (apiDataEntry.datasets / max) * 100,
@@ -43,27 +50,56 @@ export default function Datasets() {
     },
   });
 
+  const formId = useId();
+  const filterId = `${formId}-filter`;
+  const filter = (
+    <div>
+      <label htmlFor={filterId}>Filter:</label>{" "}
+      <input
+        id={filterId}
+        type="text"
+        value={filterInput}
+        onChange={(event: SyntheticEvent<HTMLInputElement>) =>
+          setFilterInput(event.currentTarget.value)
+        }
+      />
+    </div>
+  );
+
   return (
-    <Card title="Datasets by Ministry">
-      {data && (
-        <table className={styles.table}>
-          <tbody>
-            {data.map((entry, index) => (
-              <tr key={entry.department} className={styles.row}>
-                <td className={styles.department}>
-                  {entry.department}
-                  <span className={styles.bar}>
-                    <span style={{ width: `${entry.percent}%` }}></span>
-                  </span>
-                </td>
-                <td id={index.toString()} className={styles.value}>
-                  {entry.datasets}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+    <Card title="Datasets by Ministry" actions={filter}>
+      {(() => {
+        if (!data) {
+          return null;
+        }
+        if (data.length) {
+          return (
+            <table className={styles.table}>
+              <tbody>
+                {data.map((entry, index) => (
+                  <tr key={entry.department} className={styles.row}>
+                    <td className={styles.department}>
+                      {entry.department}
+                      <span className={styles.bar}>
+                        <span style={{ width: `${entry.percent}%` }}></span>
+                      </span>
+                    </td>
+                    <td id={index.toString()} className={styles.value}>
+                      {entry.datasets}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          );
+        } else {
+          if (filterInput) {
+            return <p>No data with filter criteria “{filterInput}”.</p>;
+          } else {
+            return <p>No data.</p>;
+          }
+        }
+      })()}
     </Card>
   );
 }
