@@ -3,11 +3,11 @@
   line-height: 1.5;
   font-weight: 400;
 
-  --main-color: #112;
+  --main-color: #223;
   color: var(--main-color);
-  --main-background-color: #c6c6cc;
+  --main-background-color: #ebebef;
   background-color: var(--main-background-color);
-  --main-border-color: #a9a9ab;
+  --main-border-color: #d9d9db;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

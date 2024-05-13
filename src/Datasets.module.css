@@ -28,7 +28,7 @@
 }
 .bar span {
   display: block;
-  height: 8px;
+  height: 6px;
   background-color: var(--main-color);
 }
 
