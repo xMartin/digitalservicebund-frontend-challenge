@@ -106,7 +106,7 @@ it("filters", async () => {
 
   act(() => {
     fireEvent.change(screen.getByLabelText(/filter/i), {
-      target: { value: "ZTZ" },
+      target: { value: "zTz" },
     });
   });
   expect(screen.getAllByRole("row").length).toBe(1);

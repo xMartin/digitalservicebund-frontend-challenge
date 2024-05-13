@@ -30,9 +30,11 @@ export default function Datasets() {
         }
       }
 
-      const filteredData = apiData.filter((entry) =>
-        entry.department.includes(filterInput),
-      );
+      let filteredData = apiData;
+      if (filterInput) {
+        const regExp = new RegExp(filterInput, "i");
+        filteredData = apiData.filter((entry) => regExp.test(entry.department));
+      }
 
       const result: AppDataEntry[] = [];
       for (const apiDataEntry of filteredData) {
