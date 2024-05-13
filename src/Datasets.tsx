@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import Card from "./Card";
 
 type Dataset = {
   department: string;
@@ -16,8 +17,7 @@ export default function Datasets() {
   });
 
   return (
-    <>
-      <h2>Datasets by ministry</h2>
+    <Card title="Datasets by Ministry">
       <table>
         <tbody>
           {(data || []).map((entry) => (
@@ -28,6 +28,6 @@ export default function Datasets() {
           ))}
         </tbody>
       </table>
-    </>
+    </Card>
   );
 }

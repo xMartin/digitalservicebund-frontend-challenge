@@ -9,5 +9,5 @@ it("renders heading", () => {
     </QueryClientProvider>,
   );
 
-  expect(screen.getByText(/Datasets by ministry/)).toBeInTheDocument();
+  expect(screen.getByText(/Datasets by Ministry/)).toBeInTheDocument();
 });

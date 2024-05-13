@@ -1,0 +1,13 @@
+.app {
+  padding: 2.5vh 5vw;
+}
+
+.header {
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 2em;
+  text-transform: uppercase;
+}

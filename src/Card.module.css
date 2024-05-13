@@ -1,0 +1,19 @@
+.card {
+  border: 1px solid var(--main-border-color);
+  border-radius: 5px;
+  background-color: #d3d3d8;
+}
+
+.header {
+  padding: 12px 24px;
+}
+
+.title {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 1.4em;
+}
+
+.body {
+  padding: 12px 24px 24px;
+}
